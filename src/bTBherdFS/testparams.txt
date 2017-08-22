@@ -1,0 +1,8 @@
+bTBherd <Sensitivity Standard> <Specificity Standard> <Sensitivity Severe> <Specificity Severe> <O> <R> <V1> <V2> <OV1> <OV2> <RV> <beta_o> <beta_r> <beta_i> <beta_ov1> <beta_ov2> <beta_rv> <beta_iv> <q> <Xinf PTI1> <Xinf PTI2> <Xinf PTI4> <p_confirm> <p_slaughter> <no_of_reps> <outputfile> <Fixed SIT> <final SIT> <Change Final (Bool)> <End on Severe (Bool)> <must_clear>
+
+./bTBdemo 0.554034 1.36492e-06 0.597566 0.000326933 1.29452e-05 -1 0.1 0.1 1.29452e-05 1.29452e-05 -1 0.00450145 0.00450145 0.00450145 0.00450145 0.00450145 0.00450145 0.00450145 0.707353 5.99438e-06 4.62838e-06 1.52605e-06 0.190423 0.0413273 500 badger
+
+
+./bTBherd 0.554034 1.36492e-06 0.597566 0.000326933 1.29452e-05 1 -1 0 0.00450145 0.00450145 0.00450145 0.00450145 0.707353 5.99438e-06 4.62838e-06 1.52605e-06 0.190423 0 0.0413273 0 0.554034 0.597566 500 badger
+
+./bTBherd 0.705961 7.42942e-06 0.712995 3.34008e-05 0.15963 1 -1 0 0.00506381 0.00506381 0.00506381 0.00506381 0.171966 4.62887e-06 3.65799e-06 2.31931e-06 0.181592 0 0.0476867 0 0.705961 0.712995 500 badger
