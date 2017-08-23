@@ -3,52 +3,11 @@
 #include "../../include/bTBICBMV8.h"
 #include <string.h>
 
-// Delay Distributions
-
-// gsl_ran_lognormal(gsl_r2,2.7085,0.7)
-
-//gsl_ran_exponential(gsl_r2,364/2)
-
-
-int reacto(gsl_rng *r, double p, int n)
-{
-    // Pathological case (Approx to 1)
-    if(n == 0){return 1;}
-    
-    double probs[n-1];
-    
-    // Conditional probability of (i+1) reactors
-    // given that we have more than 0
-    double accum = 0;
-    
-    for(int i=0; i < n; i++)
-    {
-        probs[i] = gsl_ran_binomial_pdf(i+1,p,n) / (1 - pow((1 - p),n));
-        accum += probs[i];
-    }
-    
-    
-    double ranx = gsl_ran_flat(r,0,1);
-    accum = 0;
-    
-    for(int i=0; i < n;i++)
-    {
-        accum += probs[i];
-        if( accum > ranx)
-        {
-            //cout << i+1 << endl;
-            return((i+1));
-        }
-    }
-    return(n);
-} 
-
-
 int main (int argc, char * const argv[]) 
 {
     
 	bool DiscoFlag = true;
-	bool save_ts        = false;
+	bool print_debug = false;
 	
 	MTRand mrandy;
 	gsl_rng * gsl_r2;
@@ -56,8 +15,6 @@ int main (int argc, char * const argv[])
 	gsl_rng_default_seed = mrandy.rand() * sizeof(long unsigned int);
 	gsl_r2 = gsl_rng_alloc(gsl_rng_mt19937);
     
-    //double max_sim_time = 10;
-	
 	const int no_of_PTI = 3;
 	
 	int PTI[no_of_PTI] = {1,2,4};
@@ -133,7 +90,7 @@ int main (int argc, char * const argv[])
 	double trial_duration = 5.0;
 	bool retain_reactors=false;
 	int this_herd = 0;
-// Extra 6	
+	
 	
 if(argc < 52)
     { 
@@ -234,6 +191,8 @@ if(argc < 52)
 			
 		}
 		
+		if(print_debug)
+		{
 		cout << "Sensitivity: " << Standard[0] << endl;
 		cout << "Specificity: " << Standard[1] << endl;
 		cout << "Sensitivity (Severe): " << Severe[0] << endl;
@@ -248,11 +207,7 @@ if(argc < 52)
 		
 		cout << "Vaccine Efficacy: " << vacc_eff << endl;
 		cout << "Vaccine D'Lay: " << vacc_lay << endl;
-		cout << "doDIVA: " << doDIVA << endl;
-		
-		//cout << "Repeat Sensitivity: " << Repeat_Sensitivity[0] << endl;
-		//cout << "Repeat Sensitivity (Severe): " << Repeat_Sensitivity[1] << endl;
-        
+		cout << "doDIVA: " << doDIVA << endl;    
 		
 		cout << "TO: " << TO << endl;
 		cout << "TR: " << TR << endl;
@@ -299,6 +254,7 @@ if(argc < 52)
 		{
 		 cout << "Do Vaccination, eligible age: " << Vacc_Eligible_Age << endl;
 		}
+		
 		if(do_batching)
 		{
 		cout << "Batch vaccination at interval of : " << batch_interval << endl;
@@ -312,6 +268,8 @@ if(argc < 52)
 		cout << "Vaccination Target " << vacc_target << endl;
 		cout << "Trial Duration " << trial_duration << endl;
 		if(retain_reactors){cout << "Retain Reactors." << endl;}
+		}
+		
 		
 	ofstream breakdownFile;
 	ofstream breakdownFile2;
@@ -323,55 +281,26 @@ if(argc < 52)
 	breakdownFile << "HerdSize,PTI,Prolonged,Recurr,Break6,Break12,Break24,Forward_Trans,Reactors_at_Start,BreakTime,Slaughter,Confirmation,Confirmed,Breaklength,Reactors,Visits,Tests,Burden,Onward_Trans" << endl;  	
 	breakdownFile2 << "Replicate,HerdSize,PTI,Breaklength,Break_Recurr,Onward_Trans,Reactors_at_Start,Reactors_at_VE6M,Reactors_at_VE12M,Reactors,Visits,Tests,DivaTests,DivaNega,Burden,Forward_Trans,Slaughter,Confirmed" << endl;
     
-    
-	//const int no_of_PTI=1;
-    //int PTI[no_of_PTI] = {1};
-	
-    // Herds, Gamma_O, Gamma_R, Gamma_V1, Gamma_V2, Gamma_OV1, Gamma_OV2, Gamma_RV, 
-    //		  Gamma_SO, Gamma_SR, Gamma_SV1, Gamma_SV2, Gamma_SOV1, Gamma_SOV2, Gamma_SRV,
-    // input, output, full_save, 
-    // latent_R, latent_V1, latent_V2, latent_OV1, latent_OV2, latent_RV, 
-    // latent_SR, latent_SV1, latent_SV2, latent_SOV1, latent_SOV2, latent_SRV
-    // verbose)
-    
-
-	//TOF = 0.1;
-	//TR = 0.1;
-	//beta_r = 0.0;
-	//beta_i = 0.0;
-	//q = 1.0;
-
+		if(print_debug)
+		{
+	   cout << "Data Path is: " << PATH_TO_DATA << endl;
+		}
+		
 		bTBICBM model(1,
         0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,
-        PATH_TO_DATA,filename,save_ts,
+        PATH_TO_DATA,filename,true,
         TO*364.0,TR*364.0,TV1*364.0,TV2*364.0,TOV1*364.0*vacc_lay,TOV2*364.0*vacc_lay,TRV*364.0*vacc_lay,
         TO*364.0*shad_lay,364.0*shad_lay,TV1*364.0,TV2*364.0,TOV1*364.0*vacc_lay,TOV2*vacc_lay,364.0*shad_lay*vacc_lay,
-        true,0.0, delta_age);
+        true,0.0, delta_age,true);
         
 	model.set_confirmation(p_confirm);
 	
-	//model.set_transmission(0.0,beta_r,beta_i,0.0,0.0,beta_r,beta_i,q,xinf_PTI[0]);
-	//model.set_transmission(0.0,beta_r,beta_i,0.0,0.0,beta_r,beta_i,q,xinf_PTI[0]);
-	//model.set_transmission(beta_o,beta_i,beta_r,beta_ov1,beta_ov2,beta_rv,beta_iv,q,0.0);
 	
 	model.set_forcing(false);
-	//model.set_demo(LifeExp, 50.0,1.5356);
-	//model.set_demo(LifeFixed, 50.0,0,(1.0/50.0)*2000.0);
-	//model.set_demo(LifeExp, 50.0,0,(1.0/50.0)*2000.0);
-	//model.set_demo(LifeGamma, 50.0,3.0,(1.0/50.0)*2000.0);
-	//model.set_demo(LifeExp, 50.0,0.0);
 	
 	double parish_testing = 0.0;
-	
-	//const int no_of_N = 24;
-	//int N_size[no_of_N] = {10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,250,300,350,400};
-	
-	//const int no_of_N = 12;
-	//int N_size[no_of_N] = {10,20,30,40,50,100,150,200,250,300,350,400};
-	
-	// Ensemble sums for all N, PTI
-	
+		
 	int no_of_H = 7;
 	
 	
@@ -389,9 +318,7 @@ if(argc < 52)
 	int ensemble_Unconfirmed[(no_of_H*no_of_PTI)];
 	int ensemble_ConfirmedS[(no_of_H*no_of_PTI)];
 	int ensemble_UnconfirmedS[(no_of_H*no_of_PTI)];
-	
-	//int ensemble_Slaughter[(no_of_H*no_of_PTI)];
-	
+		
 	double ensemble_ReactorsU[(no_of_H*no_of_PTI)];
 	double ensemble_ReactorsC[(no_of_H*no_of_PTI)];
     
@@ -418,17 +345,6 @@ if(argc < 52)
     
 	int ensemble_Onward_TransU[(no_of_H*no_of_PTI)];
 	int ensemble_Onward_TransC[(no_of_H*no_of_PTI)];
-	
-	/*
-     int sum_Reactors[(no_of_H*no_of_PTI)];
-     int sum_Breaklengths[(no_of_H*no_of_PTI)];
-     int sum_Visits[(no_of_H*no_of_PTI)];
-     int sum_Tests[(no_of_H*no_of_PTI)];
-     int sum_Reactors_at_Start[(no_of_H*no_of_PTI)];
-     int sum_Burden[(no_of_H*no_of_PTI)];
-     int sum_Forward_Trans[(no_of_H*no_of_PTI)];
-     int sum_Onward_Trans[(no_of_H*no_of_PTI)];
-     */
 	
 	// Initialise all ensemble variables to zero
 	
@@ -479,16 +395,7 @@ if(argc < 52)
             
             ensemble_Onward_TransU[index2(k,n,no_of_H)] = 0;
             ensemble_Onward_TransC[index2(k,n,no_of_H)] = 0;
-            
-            /*
-             sum_Visits[index2(k,n,no_of_H)] = 0;
-             sum_Tests[index2(k,n,no_of_H)] = 0;
-             sum_Reactors_at_Start[index2(k,n,no_of_H)] = 0;
-             sum_Burden[index2(k,n,no_of_H)] = 0;
-             sum_Forward_Trans[index2(k,n,no_of_H)] = 0;
-             sum_Onward_Trans[index2(k,n,no_of_H)] = 0;
-             */
-            
+                        
 		}
         
         
@@ -497,22 +404,15 @@ if(argc < 52)
 	
 	
 	int Herd_Size = 0;
-	
-     model.set_susceptible_risk(1.0,rel1,rel2,rel3,rel4);
+    model.set_susceptible_risk(1.0,rel1,rel2,rel3,rel4);
 
-    //model.set_test_characteristics(Standard,Severe,Standard_v, Severe_v, DIVA,s_slaughter,false,doDIVA);
-	
-	//model.set_test_characteristics(Standard,Severe,Standard_v, Severe_v, DIVA,s_slaughter,false,false);
-	//model.set_test_characteristics(Standard,Severe,Standard_v, Severe_v, DIVA,s_slaughter);
-	
 	model.set_test_characteristics(Standard,Severe,Standard_v, Severe_v, DIVA,s_slaughter,false,doDIVA);
 
 	if(this_herd < 0 || this_herd > model.DarthHerdNo)
 	{cout << "Illegal Herd" << endl;}
 
-	//for(int r=0; r < model.DarthHerdNo; r++)
+
 	for(int r=this_herd; r == this_herd; r++)
-	//int r = 73;
 	{
 			
 						model.DarthSelecta = r;
@@ -522,16 +422,15 @@ if(argc < 52)
 						
 						int n = model.DarthBindex[r];
 						int k = model.DarthPTI[r];
-						//cout << "PTI: " << k << ' ' << PTI[k] << endl;
-						//Herd_Size = 30+n*60;
-						
-						Herd_Size = model.DarthHerdSize[r];
-						
-
-						//cout << "Herd Size: " << Herd_Size << ' ' << model.DarthMoves[r] << endl;
-						// Exponential Model
 					
-						//model.set_demo(LifeExp, 364.0/(Turnover),0.0,0.0*Turnover*Herd_Size/364.0);
+						Herd_Size = model.DarthHerdSize[r];
+					
+					    if(print_debug)
+						{
+						cout << "Herd number: " << r << endl;
+						cout << "PTI: " << k << ' ' << PTI[k] << endl;
+						cout << "Herd Size: " << Herd_Size << ' ' << model.DarthMoves[r] << endl;
+						}
 						// Empirical Model
 						model.set_demo(Darth, 0.0,0.0,0.0);
 						
@@ -543,13 +442,8 @@ if(argc < 52)
 						
 					
 						
-						//cout << "Entrant " << endl;
-						//model.run_uk_testing(DiscoFlag,PTI[k],Herd_Size,Seeders,must_clear,clear_from_severe,change_SIT,second_SIT);
 						model.trial_uk_with_DIVA(DiscoFlag,PTI[k],Herd_Size,Seeders,must_clear,clear_from_severe,change_SIT,second_SIT,false,batch_interval,do_vaccination,do_batching,suspend_vacc_in_break,Vacc_Eligible_Age,retain_reactors,trial_duration,vacc_target);
-						//model.trial_fixed_with_DIVA(DiscoFlag,PTI[k],Herd_Size,Seeders,60,false,batch_interval,do_vaccination,do_batching,suspend_vacc_in_break,Vacc_Eligible_Age);
-
-                         			//model.print_demo();
-
+						
                         breakdownFile2 << r << ',' << Herd_Size << ','  << PTI[k] << ',' 
 						<< model.primary_breaklength << ',' 
 						<< model.break_recurr  << ',' 
@@ -571,8 +465,7 @@ if(argc < 52)
 						
 						if(model.confirmed_ever)
 						{
-                            //cout << primary_breaklength << ' ' << model.return_time() << ' ' << breakstart << ' ' << break6 << ' ' << break12 << ' ' << break24 << endl;
-                            
+                                    
 							ensemble_break6C[index2(k,n,no_of_H)]  += (int) model.break6;
 							ensemble_break12C[index2(k,n,no_of_H)] += (int) model.break12;
 							ensemble_break24C[index2(k,n,no_of_H)] += (int) model.break24;
@@ -604,15 +497,11 @@ if(argc < 52)
 							{
                                 ensemble_Confirmed[index2(k,n,no_of_H)]++;
 							}
-							
-							//ensemble_Slaughter[index2(k,n,no_of_H)] += (int) slaughter_house;
-							//ensemble_Confirmed[index2(k,n,no_of_H)] += (int) confirmed_at_start;
-							num_confirmed[index2(k,n,no_of_H)]++;
+								num_confirmed[index2(k,n,no_of_H)]++;
 						}
 						else
 						{
-						    //cout << "U: " <<  primary_breaklength << ' ' << model.return_time() << ' ' << breakstart << ' ' << break6 << ' ' << break12 << ' ' << break24 << endl;
-                            
+						     
 							ensemble_break6U[index2(k,n,no_of_H)]  += (int) model.break6;
 							ensemble_break12U[index2(k,n,no_of_H)] += (int) model.break12;
 							ensemble_break24U[index2(k,n,no_of_H)] += (int) model.break24;
@@ -642,44 +531,10 @@ if(argc < 52)
 							
 							num_unconfirmed[index2(k,n,no_of_H)]++;
 						}
-						/*
-                         sum_Reactors[index2(k,n,no_of_H)] += Total_Reactors;
-                         sum_Breaklengths[index2(k,n,no_of_H)] += primary_breaklength;
-                         sum_Visits[index2(k,n,no_of_H)] += Total_Visits;
-                         sum_Tests[index2(k,n,no_of_H)] += Total_Tests;
-                         sum_Reactors_at_Start[index2(k,n,no_of_H)] += Reactors_at_Start;
-                         sum_Burden[index2(k,n,no_of_H)] += Burden;
-                         sum_Forward_Trans[index2(k,n,no_of_H)] += forward_trans;
-                         sum_Onward_Trans[index2(k,n,no_of_H)] += onward_trans;
-                         */
-						//}
-						continue;
+							continue;
 					}
-					//Fadeout out of disease before breakdown with p=0 chance of re-introduction
-					//if(breakfirstFlag && (xinf == 0.0) && policy_check[4] == 0)
-					//Fadeout of disease before breakdown with low chance of re-introduction
-					//if(breakfirst==0 && policy_check[4] == 0)
-					/*
-					 if(first_break && policy_check[4] == 0 && model.return_time() > 3*364.0)
-					 {
-					 // Drop r by one and loop again
-					 cout << "Dropped " << thumb << endl;
-					 thumb++;
-					 r--;
-					 break;
-					 }
-					 */	
-				
-				
-				
-				
-				
-				
-			
-			
-			
-		
-	
+								
+
 	// Output ensemble variables
 	
 	for(int k=0; k < no_of_PTI; k++)
@@ -734,8 +589,7 @@ if(argc < 52)
         
 	}
     
-	
-	
+
 	breakdownFile.close();
 	breakdownFile2.close();
 	

@@ -1171,6 +1171,7 @@ if(!inputfile){cout << "Terminal velocity" << endl;exit(0);}
 */
 
 // Load dimensions
+
 ifstream dimensionfile((paramdirectory + "DarthDimensions.csv").c_str());
 if(!dimensionfile){cout << "Fantastic Four" << endl;exit(1);}
 dimensionfile >> DarthHerdNo >> DarthRows;
