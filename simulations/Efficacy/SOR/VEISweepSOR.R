@@ -19,7 +19,6 @@ make_unique_filenameFu <- function(x)
 	return(sprintf('output%d.csvFu',x))
 }
 
-single_runIndivSORI(5,0.50,180,0,0.3,0.0,DIVA1)
 
 single_runIndivSORI <- function(trial_duration,vacc_target, batch_interval,retain_reactors,vacc_effS,vacc_effI,DIVA)
 {
