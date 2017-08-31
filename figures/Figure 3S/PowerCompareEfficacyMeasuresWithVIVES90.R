@@ -1,8 +1,6 @@
 require(ggplot2)
 require(grid)
 
-load('VEISweepSORI.RData')
-
 
 SweepByHerd <-function(cases,pop,controlc,controlp,nherds)
 {
@@ -447,9 +445,9 @@ dfE$VE = as.factor(dfE$VE)
 dfE$VP = as.factor(dfE$VP)
 dfE$measure = as.factor(dfE$measure)
 
-p6=(ggplot(dfE,aes(x=Herds,y=power,col=measure,linetype=VE)) + geom_line()  +  scale_x_continuous('Herds',limits=c(50,300)) + scale_y_continuous('Efficacy',limits=c(-0.2,1)))
+p6=(ggplot(dfE,aes(x=Herds,y=power,col=measure,linetype=VE,shape=measure)) + geom_line()  +  scale_x_continuous('Herds',limits=c(51,300)) + scale_y_continuous('Efficacy',limits=c(-0.2,1)))+ geom_point() + scale_colour_manual(values=cbPaletteB)+ guides(linetype = guide_legend(order=1,title=expression(epsilon[I])),colour=guide_legend(order=2,title='Measures'),shape=guide_legend(order=2,title='Measure'))
 
-p5=(ggplot(df,aes(x=Herds,y=power,col=measure,linetype=VE)) + geom_line()  +  scale_x_continuous('Herds',limits=c(50,300)) + scale_y_continuous('Power'))
+p5=(ggplot(df,aes(x=Herds,y=power,col=measure,linetype=VE,shape=measure)) + geom_line()  +  scale_x_continuous('Herds',limits=c(51,300)) + scale_y_continuous('Power'))+ geom_point() + scale_colour_manual(values=cbPaletteB)+ guides(linetype = guide_legend(order=1,title=expression(epsilon[I])),colour=guide_legend(order=2,title='Measures'),shape=guide_legend(order=2,title='Measure'))
 
 pdf('PowerCompareEfficacyVES90byVI.pdf',height=2.5,width=8.5,family='Helvetica',pointsize=12)
 grid.newpage()

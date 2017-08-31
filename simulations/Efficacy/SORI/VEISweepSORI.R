@@ -46,7 +46,7 @@ jazzle<-system(sprintf('../../../bin/bTBField %g %g %g %g %g %g %g %g %g %g %d %
 DIVA[1], DIVA[2],DIVA[1],DIVA[2],
 0.0,0.0,DIVA[1],DIVA[2],
 1.0-vacc_effS,1.0,1,
-params[5],params[12],1.0/1.650,1.0,params[5],params[5],params[12],
+params[5],params[12],1.0,1.0,params[5],params[5],params[12],
 0.0,0.0,params[6],0.0,0.0,0.0,(1.0-vacc_effI)*(params[6]),params[7],
 params[8],params[9],params[10],
 1.80,2.3,1.5,1.3,
@@ -62,7 +62,6 @@ indiv <- try(read.csv(sprintf('output%d.csvFuIndividual0.dat',ranx)),silent=TRUE
 
 system(sprintf('rm %s',filename))
 system(sprintf('rm %s*',filenameFu))
-system(sprintf('rm *.dat',filenameFu))
 
 agg=data.frame(ranx=ranx,Herd=herd_no,Vaccinated=0,Reactor=sum(indiv$Reactor[indiv$Vaccinated==0]), VL=sum(indiv$VL[indiv$Vaccinated==0]),AtRisk=sum(indiv$Vaccinated==0))
 agg=rbind(agg,data.frame(ranx=ranx,Herd=herd_no,Vaccinated=1,Reactor=sum(indiv$Reactor[indiv$Vaccinated==1]), VL=sum(indiv$VL[indiv$Vaccinated==1]),AtRisk=sum(indiv$Vaccinated==1)))

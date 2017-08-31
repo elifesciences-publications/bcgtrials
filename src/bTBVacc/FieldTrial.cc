@@ -7,7 +7,7 @@ int main (int argc, char * const argv[])
 {
     
 	bool DiscoFlag = true;
-	bool print_debug = false;
+	bool print_debug = true;
 	
 	MTRand mrandy;
 	gsl_rng * gsl_r2;

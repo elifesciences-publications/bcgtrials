@@ -10599,7 +10599,14 @@ void  bTBICBM::trial_uk_with_DIVA(bool DiscoFlag,int set_this_PTI, int Herd_Size
 					
 					if(on_first_break && breakdown){Burden =  burden(0);primary_breaklength = return_time()-breakstart;}
 					if(on_first_break && !breakdown){Burden =  burden(0);}
-					if(full_save){save_data();};/*cout<<"Endsequence " << first_break << ' ' << breakfirstFlag << ' ' << (return_time()-breakstart) << endl;*/break;}
+					if(full_save){save_data();};/*cout<<"Endsequence " << first_break << ' ' << breakfirstFlag << ' ' << (return_time()-breakstart) << endl;*/
+					if(retain){ 
+					// If retaining reactors, do final test (standard interpretation) and 		
+					//remove all reactors to record in output
+					policy_check = DIVA_Protocol_Per_Animal(0,this_PTI,test_type,eligible_vacc);
+					Cull(0,policy_check,false,DiscoFlag,this_PTI,false);
+					}
+					break;}
 	
 	}				
 	

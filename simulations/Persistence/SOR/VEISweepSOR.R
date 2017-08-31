@@ -48,7 +48,7 @@ jazzle<-system(sprintf('../../../bin/bTBField %g %g %g %g %g %g %g %g %g %g %d %
 DIVA[1], DIVA[2],DIVA[1],DIVA[2],
 0.0,0.0,DIVA[1],DIVA[2],
 1.0-vacc_effS,1.0,1,
-10^params[5],-1.0,1.0/1.650,1.0,10^params[5],10^params[5],-1.0,
+10^params[5],-1.0,1.0,1.0,10^params[5],10^params[5],-1.0,
 10^params[6],10^params[6],10^params[6],(1.0-vacc_effI)*10^params[6],(1.0-vacc_effI)*10^params[6],(1.0-vacc_effI)*10^params[6],(1.0-vacc_effI)*10^params[6],10^params[7],
 10^params[8],10^params[9],10^params[10],
 1.80,2.3,1.5,1.3,
@@ -64,7 +64,6 @@ Fu <- read.csv(filenameFu,sep=',')
 
 system(sprintf('rm %s',filename))
 system(sprintf('rm %s*',filenameFu))
-system(sprintf('rm *.dat',filenameFu))
 return(Fu)
 }
 
