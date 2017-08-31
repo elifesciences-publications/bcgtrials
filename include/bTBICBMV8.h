@@ -10748,25 +10748,20 @@ vector<int> bTBICBM::ExperimentWithDIVASinglePhase(int rFlag, int group_id, int 
 		
 	bTBICBM::~bTBICBM()
 	{
-
 		delete [] Life_Expectation;
 		delete [] Life_var1;
 		delete [] Occupancy_Expectation;
 		delete [] Occupancy_var1;
-
 		delete [] Life_Births;
 		delete [] FOI;
-
 		delete [] cows;
 		delete [] infected;
-
 		delete [] SIT;
 		delete [] VE6M;
 		delete [] VE12M;
 		delete [] PTI1;
 		delete [] PTI2;
 		delete [] PTI4;
-
 		delete [] Stot;	delete [] SStot;
 		delete [] Otot; delete [] SOtot;
 		delete [] Rtot; delete [] SRtot;
@@ -10777,20 +10772,18 @@ vector<int> bTBICBM::ExperimentWithDIVASinglePhase(int rFlag, int group_id, int 
 		delete [] OV2tot; delete [] SOV2tot;
 		delete [] RVtot; delete [] SRVtot;
 		delete [] IVtot; delete [] SIVtot;
-
-		delete [] Darth_Age_Distro;
+		//delete [] Darth_Age_Distro;
 		delete [] Darth_cows;
 		delete [] DarthHerdOffsets;
 		delete [] DarthHerdSamples;
 		delete [] DarthHerdSize;
 		delete [] DarthBindex;
 		delete [] DarthPTI;
-		
 		gsl_histogram_free(AgeReactors);
 		gsl_histogram_free(AgeCReactors);
 		gsl_histogram_free(AgeSReactors);
 		gsl_histogram_free(AgeSlaughter);
-		
+	
 		for(int i = 0; i < H; i++)
 		{
 			
