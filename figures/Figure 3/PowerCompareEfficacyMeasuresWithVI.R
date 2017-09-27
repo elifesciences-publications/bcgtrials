@@ -16,13 +16,13 @@ controlp<-VES60VEI0IVP50DIVA1df$AtRisk[VES60VEI0IVP50DIVA1df$Vaccinated==0]
 cases<-VES60VEI0IVP50DIVA1df$VL[VES60VEI0IVP50DIVA1df$Vaccinated==1]
 pop<-VES60VEI0IVP50DIVA1df$AtRisk[VES60VEI0IVP50DIVA1df$Vaccinated==1]
 
-df60=rbind(data.frame(SweepByHerd_MixedD1(cases,pop,baselinec,baselinep,controlc,controlp,50,split_p),DIVA=1,VE=0.0,measure='Direct(WH)',Herds=50,VP=50))
-df60=rbind(df60,data.frame(SweepByHerd_MixedD2(cases,pop,baselinec,baselinep,controlc,controlp,50,split_p),DIVA=1,VE=0.0,measure='Direct(BH)',Herds=50,VP=50))
+df60=data.frame()
+df60=data.frame()
 
-dfE60=rbind(data.frame(SweepByHerd_MixedD1E(cases,pop,baselinec,baselinep,controlc,controlp,50,split_p),DIVA=1,VE=0.0,measure='Direct(WH)',Herds=50,VP=50))
-dfE60=rbind(dfE60,data.frame(SweepByHerd_MixedD2E(cases,pop,baselinec,baselinep,controlc,controlp,50,split_p),DIVA=1,VE=0.0,measure='Direct(BH)',Herds=50,VP=50))
+dfE60=data.frame()
+dfE60=data.frame()
 
-for(h in seq(60,300,10))
+for(h in seq(50,300,10))
 {
 
 df60=rbind(df60,data.frame(SweepByHerd_MixedD1(cases,pop,baselinec,baselinep,controlc,controlp,h,split_p),DIVA=1,VE=0.0,measure='Direct(WH)',Herds=h,VP=50))

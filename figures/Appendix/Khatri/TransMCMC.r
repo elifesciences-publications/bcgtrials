@@ -95,7 +95,7 @@ prop.var.ini <- diag(npar) * (0.1 ^ 2) / npar
                	
                 psamples[i,]=c(pars, acc.curr)
 
-	    # calculations for adaptive proposal 
+# calculations for adaptive proposal 
         if (i >= (2 * npar)) prop.var <- var(psamples[1:i, 1:npar]) * (2.38 ^ 2) / npar
         
         # print some output to screen for book-keeping

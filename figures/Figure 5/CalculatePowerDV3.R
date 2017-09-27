@@ -66,17 +66,17 @@ df$t[df$t==3] = '3 Years'
 
 
 pdf('Figure 5.pdf',family='Helvetica',points=12,width=10,height=5)
-p1=ggplot(df[df$Effect==75,],aes(x=h,y=100*Power,col=as.factor(t),shape=as.factor(t),lty=as.factor(t)))+geom_line()+geom_point(size=0.75)+facet_wrap(~model) + xlab('Group Size') + xlim(c(0,300)) + guides(linetype = guide_legend(order=1,title='Contact Time'),colour=guide_legend(order=1,title='Contact Time')) + scale_colour_manual(values=cbPaletteB) + geom_hline(yintercept=80,col='Grey')+ylab('Power')
+p1=ggplot(df[df$Effect==75,],aes(x=h,y=100*Power,col=as.factor(t),lty=as.factor(t)))+geom_line()+facet_wrap(~model) + xlab('Group Size') + xlim(c(0,300)) + guides(linetype = guide_legend(order=1,title='Contact Time'),colour=guide_legend(order=1,title='Contact Time')) + scale_colour_manual(values=cbPaletteB) + geom_hline(yintercept=80,col='Grey')+ylab('Power')
 print(p1)
 dev.off()
 
 pdf('Figure 5 - supplement 1.pdf',family='Helvetica',points=12,width=10,height=5)
-p1=ggplot(df[df$Effect==50,],aes(x=h,y=Power*100,col=as.factor(t),shape=as.factor(t),lty=as.factor(t)))+geom_line()+geom_point(size=0.75)+facet_wrap(~model) + xlab('Group Size') + xlim(c(0,500)) + guides(linetype = guide_legend(order=1,title='Contact Time'),colour=guide_legend(order=1,title='Contact Time')) + scale_colour_manual(values=cbPaletteB)+ geom_hline(yintercept=80,col='Grey')+ylab('Power')
+p1=ggplot(df[df$Effect==50,],aes(x=h,y=Power*100,col=as.factor(t),lty=as.factor(t)))+geom_line()+facet_wrap(~model) + xlab('Group Size') + xlim(c(0,500)) + guides(linetype = guide_legend(order=1,title='Contact Time'),colour=guide_legend(order=1,title='Contact Time')) + scale_colour_manual(values=cbPaletteB)+ geom_hline(yintercept=80,col='Grey')+ylab('Power')
 print(p1)
 dev.off()
 
 pdf('Figure 5 - supplement 2.pdf',family='Helvetica',points=12,width=10,height=5)
-p1=ggplot(df[df$Effect==25,],aes(x=h,y=Power*100,shape=as.factor(t),col=as.factor(t),lty=as.factor(t)))+geom_line()+geom_point(size=0.75)+facet_wrap(~model) + xlab('Group Size') + xlim(c(0,800)) + guides(linetype = guide_legend(order=1,title='Contact Time'),colour=guide_legend(order=1,title='Contact Time')) + scale_colour_manual(values=cbPaletteB)+ geom_hline(yintercept=80,col='Grey')+ylab('Power')
+p1=ggplot(df[df$Effect==25,],aes(x=h,y=Power*100,col=as.factor(t),lty=as.factor(t)))+geom_line()+facet_wrap(~model) + xlab('Group Size') + xlim(c(0,800)) + guides(linetype = guide_legend(order=1,title='Contact Time'),colour=guide_legend(order=1,title='Contact Time')) + scale_colour_manual(values=cbPaletteB)+ geom_hline(yintercept=80,col='Grey')+ylab('Power')
 print(p1)
 dev.off()
 
