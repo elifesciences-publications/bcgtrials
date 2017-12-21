@@ -144,17 +144,17 @@ require(cowplot)
 
 p2=(ggplot(dfE60,aes(x=Herds,y=effect,col=measure,shape=measure,linetype=VE)) + geom_line() + geom_point(size=0.75)  +  scale_x_continuous('Herds',limits=c(51,300)) + scale_y_continuous('Efficacy',limits=c(-0.2,1))) + scale_colour_manual(values=cbPaletteB)+ guides(linetype = guide_legend(order=1,title=expression(epsilon[I])),colour=guide_legend(order=2,title='Measures'),shape=guide_legend(order=2,title='Measures'))
 
-p1=(ggplot(df60,aes(x=Herds,y=power,col=measure,shape=measure,linetype=VE)) + geom_line()+ geom_point(size=0.75)  +  scale_x_continuous('Herds',limits=c(51,300)) + scale_y_continuous('Power')) + scale_colour_manual(values=cbPaletteB)+ guides(linetype = guide_legend(order=1,title=expression(epsilon[I])),colour=guide_legend(order=2,title='Measures'),shape=guide_legend(order=2,title='Measures'))
+p1=(ggplot(df60,aes(x=Herds,y=100*power,col=measure,shape=measure,linetype=VE)) + geom_line()+ geom_point(size=0.75)  +  scale_x_continuous('Herds',limits=c(51,300)) + scale_y_continuous('Power',limits=c(0,100))) + scale_colour_manual(values=cbPaletteB)+ guides(linetype = guide_legend(order=1,title=expression(epsilon[I])),colour=guide_legend(order=2,title='Measures'),shape=guide_legend(order=2,title='Measures'))
 
 p4=(ggplot(dfE30,aes(x=Herds,y=effect,col=measure,shape=measure,linetype=VE)) + geom_line()+ geom_point(size=0.75)  +  scale_x_continuous('Herds',limits=c(51,300)) + scale_y_continuous('Efficacy',limits=c(-0.2,1))) + scale_colour_manual(values=cbPaletteB)+ guides(linetype = guide_legend(order=1,title=expression(epsilon[I])),colour=guide_legend(order=2,title='Measures'),shape=guide_legend(order=2,title='Measures'))
 
-p3=(ggplot(df30,aes(x=Herds,y=power,col=measure,shape=measure,linetype=VE)) + geom_line() + geom_point(size=0.75) +  scale_x_continuous('Herds',limits=c(51,300)) + scale_y_continuous('Power')) + scale_colour_manual(values=cbPaletteB)+ guides(linetype = guide_legend(order=1,title=expression(epsilon[I])),colour=guide_legend(order=2,title='Measures'),shape=guide_legend(order=2,title='Measures'))
+p3=(ggplot(df30,aes(x=Herds,y=100*power,col=measure,shape=measure,linetype=VE)) + geom_line() + geom_point(size=0.75) +  scale_x_continuous('Herds',limits=c(51,300)) + scale_y_continuous('Power',limits=c(0,100))) + scale_colour_manual(values=cbPaletteB)+ guides(linetype = guide_legend(order=1,title=expression(epsilon[I])),colour=guide_legend(order=2,title='Measures'),shape=guide_legend(order=2,title='Measures'))
 
 
 
 p6=(ggplot(dfE90,aes(x=Herds,y=effect,col=measure,shape=measure,linetype=VE)) + geom_line() + geom_point(size=0.75) +  scale_x_continuous('Herds',limits=c(51,300)) + scale_y_continuous('Efficacy',limits=c(-0.2,1))) + scale_colour_manual(values=cbPaletteB)+ guides(linetype = guide_legend(order=1,title=expression(epsilon[I])),colour=guide_legend(order=2,title='Measures'),shape=guide_legend(order=2,title='Measures'))
 
-p5=(ggplot(df90,aes(x=Herds,y=power,col=measure,shape=measure,linetype=VE)) + geom_line()+ geom_point(size=0.75)  +  scale_x_continuous('Herds',limits=c(51,300)) + scale_y_continuous('Power')) + scale_colour_manual(values=cbPaletteB)+ guides(linetype = guide_legend(order=1,title=expression(epsilon[I])),colour=guide_legend(order=2,title='Measures'),shape=guide_legend(order=2,title='Measures'))
+p5=(ggplot(df90,aes(x=Herds,y=100*power,col=measure,shape=measure,linetype=VE)) + geom_line()+ geom_point(size=0.75)  +  scale_x_continuous('Herds',limits=c(51,300)) + scale_y_continuous('Power',limits=c(0,100))) + scale_colour_manual(values=cbPaletteB)+ guides(linetype = guide_legend(order=1,title=expression(epsilon[I])),colour=guide_legend(order=2,title='Measures'),shape=guide_legend(order=2,title='Measures'))
 
 
 require(cowplot) 

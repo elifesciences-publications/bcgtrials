@@ -40,7 +40,7 @@ print(power_plot)
 dev.off()
 
 pdf('Figure-Incidence-Effect.pdf',height=2.5*2,width=2.5*2,family='Helvetica',pointsize=12)
-(ggplot(df90,aes(x=Herds,y=100*median,ymin=100*lower,ymax=100*upper,fill=as.factor(coverage),col=as.factor(coverage)))  +  scale_x_continuous('Herds',limits=c(50,300)) + scale_y_continuous('Efficacy')) + scale_colour_manual(values=cbPaletteB) + scale_fill_manual(values=cbPaletteB)+ geom_ribbon(alpha=0.5,col=NA) + geom_line() + guides(linetype = guide_legend(order=1,title='Coverage'),colour=guide_legend(order=1,title='Coverage'),fill=guide_legend(order=1,title='Coverage'))+ background_grid(major = "xy", minor = "xy") + facet_wrap(~VEI)
+(ggplot(df90,aes(x=Herds,y=100*median,ymin=100*lower,ymax=100*upper,fill=as.factor(coverage),col=as.factor(coverage)))  +  scale_x_continuous('Herds',limits=c(50,300)) + scale_y_continuous('% Effect Size')) + scale_colour_manual(values=cbPaletteB) + scale_fill_manual(values=cbPaletteB)+ geom_ribbon(alpha=0.5,col=NA) + geom_line() + guides(linetype = guide_legend(order=1,title='Coverage'),colour=guide_legend(order=1,title='Coverage'),fill=guide_legend(order=1,title='Coverage'))+ background_grid(major = "xy", minor = "xy") + facet_wrap(~VEI)
 dev.off()
     
 
